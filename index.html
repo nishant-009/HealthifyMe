@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CALORIE-INTAKE</title>
+</head>
+
+<body onload="reloadTaskCard()" style="background-color:ghostwhite;">
+    <!-- <div class="p-3 mb-2 bg-secondary "> -->
+    <div class="modal fade" id="newcardmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ADD NEW ITEM</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="imageURL" class="form-label">Image URL</label>
+                        <input type="url" class="form-control" id="imageURL" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskTitle" class="form-label">Food Title</label>
+                        <input type="text" class="form-control" id="taskTitle" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskType" class="form-label">Food Type</label>
+                        <input type="text" class="form-control" id="taskType" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskDescription" class="form-label">Food Description(Protien, Fats, Carbs)</label>
+                        <textarea rows="3" type="url" class="form-control" id="taskDescription"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="addCard()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save
+                        changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- <i class="bi bi-camera2"></i> -->
+<!-- <i class="bi bi-egg-fried"></i> -->
+
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAABYlBMVEX/////ZGTk6vaIxcyAub/yy5FbXW6VnLP/YGD5iIzi8Pzp7vjHz+Lj7frvusL/XFvy9ftGRlX/8vL/
+              Vlb+5uf/0lz/01//0VaRMCymPTL/016prbpUVWedoa/2y462x7b/1my/QDPtypP/8dL//fhnaXrR1uP/+eyKgYH/7MN2uMJNT2HnyZf/4Jf/9N3/3Ie7Pzj/5q7/2HX/2mD/7sr/2oC0zNv/35T/9uT/6bj/46LE1em7
+              vqSdxcH/z0z/5KeXx9Hnc3nZsb81NUekydXSvMzMx9jmmaP3dnnioazz2bTOgY2LoLjr0HOLkadrtsikwKnkznzIkE/crLr7bW94e4q4u8Xi4uWzs7iUlJvMzdGgpbWxuMt1eIjoxtD/TUydl63qjZW3jZ7gd4DbyZ/
+              z27nHhJLWy4bLyI6Yvq/CrLy9yaHCxpaKsreVg3efhnCbIxC4jJ2GnqKRcXCWS0Tlm6XWKtxwAAANmUlEQVR4nO2djV/bNhrHA+MlLL5Lt56kzaPMJSFpUpI0ISFvJaG8d6UtHZStW7vRdl3Ltbfb7W7//
+              z2SHcckkmwH19b4+PdZiYYd0DfPo+dFAZRIxIoVK1asWLFixYoVK1asWLFixbriylgPtbzkporsouIq9Zrs0SAl8U2ZXjWk6XwEGZjU6WMN18Q3NVFDfLGcCXpOwaqGTbQKNsQ3EcnFdo/o9YAn5Vv1Qkt4rYIxKcNjS
+              cfCe8oSwjzByPwK0amFCCIV0dUSxpiuxKpOsqJ72ggL8asI1w2Z/UMQ+CFCwoXU1+FyllIQYbxsYjGCgSuJFhE/NwRlEdbbBUQE0ZDaBxUgXCIidGVDTJgnqA0vIolyJQJhiYIgvhPWgRDMAGtNuJhgqQkJC+yFKZFCE
+              FOdVBhV2cc29ypEEYg1WWoMkR0yEsImC1ARE1YQzeVVxM931EDUTbMEiWZJHdkQXDN0GqYaJNKcWCAGfIRowHdTyATMTQ2Bkc1wa/Av5c3XBYvjcBjKmjHEEKwzCPUVGk1rqC/4AjUxYZ1F4DIRXA5LJdJhH/nrDPDaO
+              qxB05l5QmLCDluGFSJ6cUKSma7ygrXS0RFEm2aigwRVAazUkm7wr9Vwg4XhqFuPBpu8YKlAqi83MIJQJCgKACAjckOid+gKlrQl4QjmKI7mdYTqlLIuooBI1RJcK0OgydZEBg5TLJQI1IKqJE/0PsyWf0OfdPICQsgjN
+              V2P3EcTlAILG7ws9TQD1/IiwgopiAibNJcaCgDS3oiIsl2CZsO+ToQJs0ZaIkLIIyxOK6CsjoWFNe3uwUXrouYCoYSAMEuwOhs4BXETW6HNH8alGv81gGTRL+nckg8imLi1Dl0VXRfE9I6uZ2FFGRV+woRkSRB/
+              E6eAxPsCEcgQ7TWw3heaKEGTVyDNcodftpdQM8AJXloQT/ndRYZ2hrCkML+56EMuzRBuKK4Ji/VoVEV8N4SECJ9vYLOPHFMF+DOEayw94h2oMQm2RM3OEJK3zq2fDfDhDHe7WJhfIhPMiGtETPsm2gnzMKD3oo7My3
+              rCOi8a0Ve7wy+uG6xyrrE+eExlUksIbNjn+25UMqrMHrwEbe7ZV3VuZVegcBluA1gR10lRqEbXTJ+7p2hu4Qg2tjsUg0+Io92dGVWTTqdFeLGmgFjNzd/YZptMXMJs9I3vBTFvY4FxTGUzJpa4+0nsGRme7TNEqYoGYq
+              WeEGxs5s3ykl96M4xMj7Pi2vwyIDpVKFyVF/azZj3H97oe9etMj1PQlVRpnAZiW34l7naT0WO1SYPndU1q9HyP47+1aDe6OaqQZkHn5rzWRO9h455SgSZBnREhQe05karqvbffMgjBilWSQSujVIqOFStWrFixwtO1aV
+              upa+53B6kQ6EDTmlMu39TxagShVCiE2kXJbw4WcHo6OsLcyGe13BUjHAMcIPoESAkVNeE4oHXBH1/uK6G01FUg1G4vCnX7WUpJQn8mfDrHE+WDh9sfyYYpl1kFqdQKj2/lNJd7TglzH4UwRD4B4UoONJ27WoTO5ffZKYRRQLyxeHUIFz9zapvWTNdy06cKEKZS/LFfwiHc9jZ8+I5OIzf9PHrC1KljFa2cToJ4kfDpd9e+3/5s+4Y5jafRE+ZuO+ODOZ1LEdJv/wyM+AOdxo+LkUea1I3FCzH+qwmMeIHwGf32P1A/fXr6/YvF6GNp4IS36bd/tm0uyEUF8mHghNvPTBMyzV1FQiuWXkXCi/nQ9NirRQgsI1qcU4EQOp+AsoVIYRM62m7rE18tOl71SUyoFGEq93x+fv55zskRQNX2Qh3CHx/NUz16PgmIWKeyHv/px+nxuRPJzQ/lbeq0xfOgVO6GUKcfaZ+GOxEH4PxzF3+8uAnnyhn+XhtvFpqT8JFs0kO89a5nSLnCIEz9yNBW5l6YRpTjre9sfjLQ5s76pSEDJ/wbRxbg3KKJ+CnvHpNvfUg3pDQZeU/yosAJ/84R42IBnI14t/xEMXbG8Ewxxp94T/OgzwMG/Pzn9JiSAxuabnp2feyOn19S+wn4Boz7nC/trp//ETTh9akxJc9YhFmZW2Gor5KjN6S3IKyM++cFrWvdreTYM911PRTCXw8dsfTw9cg8k8ndrtSAAzN2d6f8I4ZCODXlzBZno7NM7nWFK9CpTU3b848YDmHynsOIJyMX02BBFw8dCBAVJQTEeZPx8OxkZI50DXoEBMTublpNQnCuBzTcnD0YtUF635uL2oj3fSKGRUjjydTJ1FgwTB54CTJDbWrde/4cNTxCvtJ7mmZPf+NrkTbse3a0PX9GjJiQ+qjN98uSWKtfT+qnUdtwWKndXZq1NBi8sT9DP/nL0E9Ho7HChOn7tglNwOVV+FC2oOj4zSp7pMMB4rp27MeIEdvQNuGGaa/Vbyjm7Ow3byzKZUq5TP+bnb1r+6mfbxEpYfKlbcJfZl21vDQwYnffRziNlDC9a69CakLbcA77Mf80P8zOfj1YiX7CabReaptwww4qb1ZnncOlDB1lzE8M3XS0MFKKMMnERi85hEy2Nb9ZXXJE17uTuGnYhMmTB6/Ozl49oD1Cest20hFCW6vLzv+7Wxy4qY/qNGTC5AOzAj+chyYxuWeX3CLCi7o7M3BTTVVCRysMffCJo57xRlicGbjpgWc3DZUw+drRJh4eHDgIZ5epVldXl8UDJ+GCooRnzl7/1UJ32FUUqWbePnw7Qwcbbx++Y4PzJw/f0cfHMPgAN1iEO92XahKanf6jlRXzXZo/nYQzILyG1wx43NCtwTkdPIRr52u6OZixCO8rSZh8QAkfLc7NLTLCfzo6w/fnM8UPa+8ff1gDU72DAfwrFt+uHT2Gf8Xik7Xzx/BvQLipee8vQiX8lXKxd/yest19ByF5QnnAfGtvi8BSBKu9Kz5+qBeLR8D82DBg0DuasRA3fRTf4RMyGz4atWFNf3+EDXBDAx+916k/6gYMnsBgzTj6sEYH58UhoaI2NEPpC2vre/6+g/B8DXRUnAGTra3hc2tgbMDgvTWYYYBKE05NOTeG589e2pHmX7du/fbtt7/dorIH/3YMbpn6w0Lc8VG2hZstnHvfh68Pul2L8IubN2/euXPT1Njgjjm48+WXv/8xIFQ0H0JCHNY0/0kPa5ovPemLL363jKhsTQOIrw4HgFCX2tts/4XZe9H/rJWoaV75IugtXp/NHx7Ov6Kbno4G2Etdurx8dxBrFO4tzI3hE/P9leS+HWo8V95MfkJppD1+8kDUAbsQ+lmG0e5iXLcbRH+Evt6Binavza69fRH6ctKICe184YvQl5NGvee9NSjcVl0Rl5Zmzy0T+noPMVrCYayxVpgX+TNh1Lv66eOBET0Dbmpbf6n3nqYGP2XimdDnW0+REw53hT376P5f6h1S9oMKXR+EO/7CjAqEdF943TPhpp+aWxnCE80zIgD6eE9GFUL7xzG8AProfBUiBETNE+KOpt3z+/NCahCCo+7RpOECuK5pvlK9SoTQLm51tR03D53kJxNVITR/sEbblBmw+6d/D1WJcCp9AmZcFzAC3+7JZIDqEE4l0wu7XY0DCQGmu7uQnsRD1SKkjAfHWpf9OoKFyX4Zoatt3ZuYTy1CypheON7rdge/TAKjveOF9CX4VCM0IU8W9u8fb+1uHd/fXzi5HJ6KhIwymbR+jeGSdMoSBqqYcALCpFoKnnBBNQVNmPhUNQUNGO5f4PGimNC3wvxTX54UOGHimvh3jyNQSH/dM1asWLFixYolUrlAVRcf51EXnSGT6VhS7QiWi8r2ECKE9ASnOINqhugCPE/Xpc9VQS2CjQZIeHxhXnjCaL5dreq4U+2rbcMCcjmbsY6Q5MAW5c49HFdHJ243yA7gxGoduMaT4DTLoRrSY5MM1U7nHBM7qFoqLDiy01SDf+qsQqInOEtvgEgkew1K3GMUVVIVuZzFXEf8Q0kHz+ce2qmSGtyzHB2CfIAlZ4wWVDsXcEz8M1UdoqfCS24piw6aV0Ut4na+XA0IJWbKq54Q24LDnYciQGjIriueLircA0cdoqcfS5eqodzhjhelu+X7DMFNLKt6KtzTc5VR2TXfFxCuI5md+9zDPpVRFfGPiR+qg4y89LDfglonco+q4Vo4V1AzK2yfqMpKB9MskoZJKgO1s9L+Kqt0MKVhRH5Hlh64rUsziuHm6FEKWj+X2bE1iKX9QwMpdtqxUwYk80azJFmKGVqUYenr0EHqVqY0m9NNKMn82wg3oAWWNPlwi7qVKeS6RqtclwWKDn0N5IRlxU6Od6oinzpVQ69k2vLTnyGYqnq0cBa7byOxisDlfGsU4PHXwapMXLOhaR8XwoaydVtfdytKrTVWkxP2kRHcpAJVDbsuoDYrul0yXkFamUeoLMRIt5k1WWtYkRO2VK3b6ki2O2HKYFs0TSSt7bLINSRHo5JLAEmw7WJ6S9MllBi6mjuKBnZ1roy5XdxB8o2Apu6yURCNoGSTvafE1Da3i92CZRXpQc0qSJV7GCNiVPoSQzbNWFR1IawjNeu2jkGIDpQ9sSUNsyRwI2wpW7dlM1XoGwxxyiDmbjc0GPIvRFRughOSlGiFUkjphvxrNHtqJkRXDbqGjOt2mvztK4VVMWNktqdmvgtQLTXrzlixYsWKFStWrFixYl1G/we+nYhlKptXnQAAAABJRU5ErkJggg==" width="50" height="50"><strong> SNAP & EAT</strong> 
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Diet <i class="fas fa-utensils"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Footsteps <i class="fas fa-shoe-prints"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Calories Burnt <i class="fas fa-walking"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sleep Tracker <i class="fas fa-bed"></i></a>
+                    </li>
+                </ul>
+                <button class="btn btn-dark btn-outline-light ml-auto" data-bs-toggle="modal" data-bs-target="#newcardmodal">
+                    <i class="fas fa-coffee"></i> ADD NEW
+                </button>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="./asset/3.jpg" alt="First slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="./asset/1.jpg" alt="Second slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="./asset/2.jpg" alt="Third slide">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div> -->
+      
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100 h-50" src="./asset/1.jpg" alt="First slide">
+            <div class="carousel-caption d-none d-md-block">
+                <!-- <h5>My Caption Title (1st Image)</h5>
+                <p>The whole caption will only show up if the screen is at least medium size.</p> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="./asset/4.jpg" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="./asset/3.jpg" alt="Third slide">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+
+    <main class="container">
+        <section>
+            <br>
+            <div id="taskContents" class="row"></div>
+            <!-- <div class="p-3 mb-2 bg-secondary text-white"></div> -->
+        </section>
+    </main>
+
+    <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
+        integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
+        crossorigin="anonymous"></script>
+
+    <!-- </div> -->
+</body>
+
+<footer class="bg-dark text-center text-white">
+    <div class="container p-4 pb-0">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+            <!-- Facebook -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fab fa-facebook-f"></i></a>
+
+            <!-- Twitter -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+
+            <!-- Google -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fab fa-instagram"></i></a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fab fa-linkedin-in"></i></a>
+
+            <!-- Github -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
+        </section>
+        <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2020 Copyright:
+        <a class="text-white" href="https://snap&eat.com/">Snap&Eat.com</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+
+</html>
